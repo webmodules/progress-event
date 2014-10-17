@@ -11,8 +11,8 @@ describe('ProgressEvent', function () {
 
       assert.equal(p.type, 'progress');
       assert.equal(p.lengthComputable, false);
-      assert.equal(p.loaded, false);
-      assert.equal(p.total, false);
+      assert.equal(p.loaded, 0);
+      assert.equal(p.total, 0);
     });
 
     it('should create a `ProgressEvent` instance with `lengthComputable`', function () {
@@ -20,8 +20,8 @@ describe('ProgressEvent', function () {
 
       assert.equal(p.type, 'progress');
       assert.equal(p.lengthComputable, true);
-      assert.equal(p.loaded, false);
-      assert.equal(p.total, false);
+      assert.equal(p.loaded, 0);
+      assert.equal(p.total, 0);
     });
 
   });

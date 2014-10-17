@@ -28,10 +28,11 @@ module.exports = useNative ? NativeProgressEvent :
   e.initEvent(type, false, false);
   if (props) {
     e.lengthComputable = Boolean(props.lengthComputable);
-    e.loaded = Boolean(props.loaded);
-    e.total = Boolean(props.total);
+    e.loaded = Number(props.loaded) || 0;
+    e.total = Number(props.total) || 0;
   } else {
-    e.lengthComputable = e.loaded = e.total = false;
+    e.lengthComputable = false;
+    e.loaded = e.total = 0;
   }
   return e;
 } :
@@ -42,10 +43,11 @@ function ProgressEvent (type, props) {
   e.type = type;
   if (props) {
     e.lengthComputable = Boolean(props.lengthComputable);
-    e.loaded = Boolean(props.loaded);
-    e.total = Boolean(props.total);
+    e.loaded = Number(props.loaded) || 0;
+    e.total = Number(props.total) || 0;
   } else {
-    e.lengthComputable = e.loaded = e.total = false;
+    e.lengthComputable = false;
+    e.loaded = e.total = 0;
   }
   return e;
 }
