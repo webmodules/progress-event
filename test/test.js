@@ -24,36 +24,38 @@ describe('ProgressEvent', function () {
       assert.equal(p.total, 0);
     });
 
-    it('should create a `ProgressEvent` instance that is dispatchable', function () {
+    it('should create a `ProgressEvent` instance that is dispatchable', function (done) {
       var p = new PE('progress', {
         lengthComputable: true,
         loaded: 4,
         total: 10
       });
 
-      var called = false;
-      var e = document.createElement('div');
-      document.body.appendChild(e);
-
       function onprogress (ev) {
-        assert.equal(p.type, 'progress');
-        assert.equal(p.lengthComputable, true);
-        assert.equal(p.loaded, 4);
-        assert.equal(p.total, 10);
-        called = true;
+        if (!ev) ev = window.event;
+        assert.equal(ev.lengthComputable, true);
+        assert.equal(ev.loaded, 4);
+        assert.equal(ev.total, 10);
+        done();
       }
 
-      assert(!called);
-      if (e.dispatchEvent) {
-        e.addEventListener('progress', onprogress, false);
-        e.dispatchEvent(p);
+      if (document.body.dispatchEvent) {
+        document.body.addEventListener('progress', onprogress, false);
+        document.body.dispatchEvent(p);
       } else {
         // IE <= 8 will only allow us to fire "known" event names,
         // so we need to fire "click" instead of "progress :\
-        e.attachEvent('onclick', onprogress);
-        e.fireEvent('onclick', p);
+        document.body.attachEvent('onclick', onprogress);
+
+        // need to fire event in a separate tick for some reason…
+        setTimeout(function () {
+          p.type = 'click';
+          p.eventName = 'click';
+          p.eventType = 'click';
+
+          document.body.fireEvent('onclick', p);
+        }, 50);
       }
-      assert(called);
     });
 
   });
