@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/webmodules/progress-event/issues"
   },
-  "homepage": "https://github.com/webmodules/progress-event"
+  "homepage": "https://github.com/webmodules/progress-event",
+  "devDependencies": {
+    "zuul": "~1.11.2"
+  }
 }
