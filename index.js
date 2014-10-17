@@ -21,7 +21,9 @@ try {
  */
 
 module.exports = useNative ? NativeProgressEvent :
-function ProgressEvent (type, props) {
+
+// IE >= 9
+'function' === typeof document.createEvent ? function ProgressEvent (type, props) {
   var e = document.createEvent('Event');
   e.initEvent(type, false, false);
   if (props) {
@@ -32,4 +34,18 @@ function ProgressEvent (type, props) {
     e.lengthComputable = e.loaded = e.total = false;
   }
   return e;
-};
+} :
+
+// IE <= 8
+function ProgressEvent (type, props) {
+  var e = document.createEventObject();
+  e.type = type;
+  if (props) {
+    e.lengthComputable = Boolean(props.lengthComputable);
+    e.loaded = Boolean(props.loaded);
+    e.total = Boolean(props.total);
+  } else {
+    e.lengthComputable = e.loaded = e.total = false;
+  }
+  return e;
+}
