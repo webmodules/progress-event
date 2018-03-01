@@ -1,6 +1,6 @@
 {
   "name": "progress-event",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Cross-browser `ProgressEvent` constructor",
   "main": "index.js",
   "scripts": {
