@@ -1,5 +1,6 @@
 
-var NativeProgressEvent = typeof global !== 'undefined' && global.ProgressEvent;
+var NativeProgressEvent = (typeof global !== 'undefined' && global.ProgressEvent) ||
+                          (typeof window !== 'undefined' && window.ProgressEvent);
 var useNative = !!NativeProgressEvent;
 
 try {
